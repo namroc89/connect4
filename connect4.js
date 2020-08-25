@@ -9,17 +9,17 @@ const WIDTH = 7;
 const HEIGHT = 6;
 
 let currPlayer = 1; // active player: 1 or 2
-const board = []; // array of rows, each row is array of cells  (board[y][x])
+let board = []; // array of rows, each row is array of cells  (board[y][x])
 
 /** makeBoard: create in-JS board structure:
  *    board = array of rows, each row is array of cells  (board[y][x])
  */
 
-function makeBoard(WIDTH, HEIGHT) {
+function makeBoard() {
 	for (let i = 0; i < HEIGHT; i++) {
 		board[i] = [];
 		for (let j = 0; j < WIDTH; j++) {
-			board[i][j] = null;
+			board[i][j] = 0;
 		}
 	}
 	return board;
@@ -72,7 +72,6 @@ function placeInTable(y, x) {
 	let selectedCell = document.getElementById(`${y}-${x}`);
 	const pieces = document.createElement('div');
 	pieces.classList.add('piece', currPlayer);
-
 	selectedCell.appendChild(pieces);
 
 	// TODO: make a div and insert into correct table cell
@@ -81,6 +80,7 @@ function placeInTable(y, x) {
 /** endGame: announce game end */
 
 function endGame(msg) {
+	return alert(msg);
 	// TODO: pop up alert message
 }
 
@@ -99,12 +99,17 @@ function handleClick(evt) {
 	// place piece in board and add to HTML table
 	// TODO: add line to update in-memory board
 	placeInTable(y, x);
-
+	if (board[y][x] === 0) {
+		board[y][x] = currPlayer;
+	}
 	// check for win
 	if (checkForWin()) {
 		return endGame(`Player ${currPlayer} won!`);
 	}
 
+	if (board.every((x) => x.every((j) => 0))) {
+		return endGame('Tie game');
+	}
 	// check for tie
 	// TODO: check if all cells in board are filled; if so call, call endGame
 
