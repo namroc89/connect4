@@ -19,7 +19,7 @@ function makeBoard() {
 	for (let i = 0; i < HEIGHT; i++) {
 		board[i] = [];
 		for (let j = 0; j < WIDTH; j++) {
-			board[i][j] = 0;
+			board[i][j] = null;
 		}
 	}
 	return board;
@@ -63,7 +63,15 @@ function makeHtmlBoard() {
 
 function findSpotForCol(x) {
 	// TODO: write the real version of this, rather than always returning 0
-	return 0;
+	for (let i = HEIGHT - 1; i >= 0; i--) {
+		if (!board[i][x]) {
+			return i;
+		}
+		// if (index === null) {
+		// 	return [ i ];
+		// }
+	}
+	return null;
 }
 
 /** placeInTable: update DOM to place piece into HTML table of board */
@@ -80,7 +88,8 @@ function placeInTable(y, x) {
 /** endGame: announce game end */
 
 function endGame(msg) {
-	return alert(msg);
+	alert(msg);
+
 	// TODO: pop up alert message
 }
 
@@ -99,7 +108,7 @@ function handleClick(evt) {
 	// place piece in board and add to HTML table
 	// TODO: add line to update in-memory board
 	placeInTable(y, x);
-	if (board[y][x] === 0) {
+	if (board[y][x] === null) {
 		board[y][x] = currPlayer;
 	}
 	// check for win
@@ -107,14 +116,15 @@ function handleClick(evt) {
 		return endGame(`Player ${currPlayer} won!`);
 	}
 
-	if (board.every((x) => x.every((j) => 0))) {
-		return endGame('Tie game');
-	}
 	// check for tie
 	// TODO: check if all cells in board are filled; if so call, call endGame
+	if (board.every((x) => x.every((j) => null))) {
+		return endGame('Tie game');
+	}
 
 	// switch players
 	// TODO: switch currPlayer 1 <-> 2
+	currPlayer === 1 ? (currPlayer = 2) : (currPlayer = 1);
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */

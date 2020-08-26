@@ -29,3 +29,10 @@
 #column-top td:hover {
 	background-color: gold;
 }
+
+.piece.\31 {
+	background-color: red;
+}
+.piece.\32 {
+	background-color: blue;
+}
