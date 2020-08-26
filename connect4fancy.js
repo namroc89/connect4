@@ -67,9 +67,6 @@ function findSpotForCol(x) {
 		if (!board[i][x]) {
 			return i;
 		}
-		// if (index === null) {
-		// 	return [ i ];
-		// }
 	}
 	return null;
 }
@@ -88,8 +85,10 @@ function placeInTable(y, x) {
 /** endGame: announce game end */
 
 function endGame(msg) {
-	alert(msg);
-
+	window.setTimeout(() => window.alert(msg), 600);
+	let top = document.querySelector('#column-top');
+	top.removeEventListener('click', handleClick);
+	window.setTimeout(() => window.location.reload(), 2500);
 	// TODO: pop up alert message
 }
 
@@ -125,6 +124,9 @@ function handleClick(evt) {
 	// switch players
 	// TODO: switch currPlayer 1 <-> 2
 	currPlayer === 1 ? (currPlayer = 2) : (currPlayer = 1);
+	const player = document.querySelector('#player');
+	console.log(player);
+	player.innerText = `Player ${currPlayer}'s Turn`;
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
