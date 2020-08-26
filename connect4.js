@@ -77,7 +77,7 @@ function findSpotForCol(x) {
 /** placeInTable: update DOM to place piece into HTML table of board */
 
 function placeInTable(y, x) {
-	let selectedCell = document.getElementById(`${y}-${x}`);
+	const selectedCell = document.getElementById(`${y}-${x}`);
 	const pieces = document.createElement('div');
 	pieces.classList.add('piece', currPlayer);
 	selectedCell.appendChild(pieces);
@@ -97,20 +97,20 @@ function endGame(msg) {
 
 function handleClick(evt) {
 	// get x from ID of clicked cell
-	let x = +evt.target.id;
+	const x = +evt.target.id;
 
 	// get next spot in column (if none, ignore click)
-	let y = findSpotForCol(x);
+	const y = findSpotForCol(x);
 	if (y === null) {
 		return;
 	}
 
 	// place piece in board and add to HTML table
 	// TODO: add line to update in-memory board
-	placeInTable(y, x);
 	if (board[y][x] === null) {
 		board[y][x] = currPlayer;
 	}
+	placeInTable(y, x);
 	// check for win
 	if (checkForWin()) {
 		return endGame(`Player ${currPlayer} won!`);
@@ -118,7 +118,7 @@ function handleClick(evt) {
 
 	// check for tie
 	// TODO: check if all cells in board are filled; if so call, call endGame
-	if (board.every((x) => x.every((j) => null))) {
+	if (board.every((x) => x.every((y) => y))) {
 		return endGame('Tie game');
 	}
 
@@ -139,6 +139,8 @@ function checkForWin() {
 	}
 
 	// TODO: read and understand this code. Add comments to help you.
+
+	//create a list of winning parameters.
 
 	for (let y = 0; y < HEIGHT; y++) {
 		for (let x = 0; x < WIDTH; x++) {
